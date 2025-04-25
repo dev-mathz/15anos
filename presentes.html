@@ -1,0 +1,186 @@
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Convite</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Uncial+Antiqua&display=swap" rel="stylesheet">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville&family=Playfair+Display:wght@700&display=swap');
+    
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #e7dfd0;
+      font-family: 'Libre Baskerville', serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      color: #1f1f1f;
+      overflow-x: hidden;
+    }
+
+    header {
+      padding: 25px;
+      border-top: 1px solid black;
+      border-bottom: 1px solid black;
+      height: 4px;
+    }
+
+    footer {
+      border-top: 1px solid black;
+      font-size: 15px;
+      text-align: center;
+      font-family: 'Uncial Antiqua', cursive;
+      padding: 5px 0;
+    }
+
+    .content {
+      opacity: 0;
+      transform: translateY(50px);
+      transition: all 1s ease;
+      padding: 30px 20px;
+      max-width: 800px;
+      margin: 0 auto;
+      white-space: normal;
+      word-break: break-word;
+    }
+
+    .content.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 32px;
+      margin-bottom: 20px;
+      color: #6b4c8f;
+      text-align: center;
+      animation: pulse 2s infinite;
+    }
+
+    .gift-list {
+      font-size: 18px;
+      line-height: 1.8;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .gift-list b {
+      color: #6b4c8f;
+    }
+
+    .heart {
+      color: #c56cb7;
+      margin-right: 5px;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    .scroll-indicator {
+      position: fixed;
+      right: 20px;
+      bottom: 40px;
+      font-size: 30px;
+      color: #6b4c8f;
+      animation: bounce 1.5s infinite;
+      transition: opacity 0.5s ease;
+    }
+
+    .scroll-indicator.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(10px); }
+    }
+  </style>
+</head>
+<body>
+  <header></header>
+
+  <div class="scroll-indicator" id="scrollIndicator">↓</div>
+
+  <div class="content" id="giftSection">
+    <div class="section-title">SUGESTÕES DE PRESENTES</div>
+    <div class="gift-list">
+      <p><span class="heart">♡</span><b>Cor favorita:</b> Lilás e rosa</p>
+
+      <p><span class="heart">♡</span><b>Gosto de:</b> Perfumes / Cremes / Body Splash femininos (florais, amadeirados, frutados, orientais)</p>
+
+      <p><span class="heart">♡</span><b>Cuidados com o cabelo cacheado:</b><br>
+      Linhas favoritas: Apse cosméticos, Wide care, Lola cosméticos, Heyyoucosmeticos<br>
+      - Fronha e toucas de cetim<br>
+      - Cremes de pentear<br>
+      - Óleos reparadores<br>
+      - Máscaras hidratantes
+      </p>
+
+      <p><span class="heart">♡</span><b>Calçados:</b> 38/39</p>
+
+      <p><span class="heart">♡</span><b>Roupas:</b><br>
+      - Calça: 38/40<br>
+      - Blusas: M/G<br>
+      - Casacos: M/G (Moletom, jaquetas)<br>
+      - Vestidos: M/G
+      </p>
+
+      <p><span class="heart">♡</span><b>Acessórios:</b><br>
+      - Bolsas pequenas<br>
+      - Brincos, colares, pulseiras e anéis delicados (anel: 20)<br>
+      - Presilhas e acessórios de cabelo
+      </p>
+
+      <p><span class="heart">♡</span><b>Maquiagem & Cuidados Pessoais:</b><br>
+      - Máscaras de cílios<br>
+      - Gloss<br>
+      - Lip Tint<br>
+      - Blush<br>
+      - Skin Care<br>
+      - Hidratante labial
+      </p>
+
+      <p><span class="heart">♡</span><b>Decoração & Outros:</b><br>
+      - Velas aromáticas<br>
+      - Luminárias fofas<br>
+      - Almofadas decorativas<br>
+      - Pelúcias<br>
+      - Acessórios tecnológicos<br>
+      - Cadernos e papelaria fofa<br>
+      - Livros de romance ou fantasia<br>
+      - Grifter Card
+      </p>
+    </div>
+  </div>
+
+  <footer>O Pergaminho Diário</footer>
+
+  <script>
+    const giftSection = document.getElementById('giftSection');
+    const scrollIndicator = document.getElementById('scrollIndicator');
+    let hasScrolled = false;
+
+    window.addEventListener('scroll', () => {
+      const sectionTop = giftSection.getBoundingClientRect().top;
+      const windowHeight = window.innerHeight;
+
+      if (sectionTop < windowHeight - 100) {
+        giftSection.classList.add('visible');
+      }
+
+      if (!hasScrolled && window.scrollY > 20) {
+        scrollIndicator.classList.add('hidden');
+        hasScrolled = true;
+      }
+    });
+  </script>
+</body>
+</html>

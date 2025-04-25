@@ -1,0 +1,77 @@
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Convite</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Uncial+Antiqua&display=swap" rel="stylesheet">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville&family=Playfair+Display:wght@700&display=swap');
+    
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #e7dfd0;
+      font-family: 'Libre Baskerville', serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      color: #1f1f1f;
+      overflow-x: hidden;
+    }
+
+    header {
+      padding: 25px;
+      border-top: 1px solid black;
+      border-bottom: 1px solid black;
+      height: 4px;
+    }
+
+    footer {
+      border-top: 1px solid black;
+      font-size: 15px;
+      text-align: center;
+      font-family: 'Uncial Antiqua', cursive;
+      padding: 5px 0;
+    }
+
+    .content {
+      opacity: 0;
+      transform: translateY(50px);
+      transition: all 1s ease;
+      padding: 30px 20px;
+      max-width: 800px;
+      margin: 0 auto;
+      white-space: normal;
+      word-break: break-word;
+    }
+
+  </style>
+</head>
+<body>
+  <header></header>
+
+  <footer>O Pergaminho Diário</footer>
+
+  <script>
+    const giftSection = document.getElementById('giftSection');
+    const scrollIndicator = document.getElementById('scrollIndicator');
+    let hasScrolled = false;
+
+    window.addEventListener('scroll', () => {
+      const sectionTop = giftSection.getBoundingClientRect().top;
+      const windowHeight = window.innerHeight;
+
+      if (sectionTop < windowHeight - 100) {
+        giftSection.classList.add('visible');
+      }
+
+      if (!hasScrolled && window.scrollY > 20) {
+        scrollIndicator.classList.add('hidden');
+        hasScrolled = true;
+      }
+    });
+  </script>
+</body>
+</html>
