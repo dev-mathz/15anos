@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Debut Esther Valentina</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      background-color: #f1ede7;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      font-family: 'Playfair Display', serif;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .container {
+      position: relative;
+      width: 100%;
+      max-width: 660px;
+    }
+
+    img {
+      width: 100%;
+      height: auto;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      z-index: 1;
+      display: block;
+    }
+
+    .round-button {
+      position: absolute;
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      background-color: #000;
+      color: #fff;
+      font-size: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      cursor: pointer;
+      opacity: 0.1;
+      transition: transform 0.3s, opacity 0.3s;
+    }
+
+    .round-button:hover {
+      transform: scale(1.1);
+      opacity: 0.2;
+    }
+
+    .btn-local { top: 67%; left: 56%; }
+    .btn-presente { top: 67%; left: 67%; }
+    .btn-vestimenta { top: 67%; left: 79%; }
+
+    .btn-presenca {
+      position: absolute;
+      top: 92%;
+      left: 103%;
+      width: 65px;
+      height: 65px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #a96bdc, #df8ae2);
+      color: white;
+      font-size: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .btn-presenca:hover {
+      transform: scale(1.1);
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.25);
+    }
+
+    .confirmacao-presenca {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.6);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 10;
+    }
+
+    .formulario-presenca {
+      background: #ffffff;
+      padding: 40px;
+      border-radius: 16px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+      width: 400px;
+      max-width: 90%;
+      display: block;
+      margin: 20px auto 0;
+      text-align: center;
+      font-family: 'Playfair Display', serif;
+    }
+
+    .formulario-presenca h2 {
+      margin-bottom: 20px;
+      font-size: 26px;
+      color: #7e4ca6;
+    }
+
+    .formulario-presenca input {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+    }
+
+    .formulario-presenca button {
+      background: linear-gradient(135deg, #9c5dc7, #cc81db);
+      color: white;
+      border: none;
+      padding: 12px;
+      cursor: pointer;
+      border-radius: 8px;
+      width: 60%;
+      font-size: 18px;
+      transition: background 0.3s ease;
+      display: block;
+      margin: 20px auto 0;
+    }
+
+    .formulario-presenca button:hover {
+      background: linear-gradient(135deg, #8a4eb3, #b96ccd);
+    }
+
+    .fechar-btn {
+      position: absolute;
+      top: 20px;
+      right: 360px;
+      background-color: #e74c3c;
+      color: white;
+      border: none;
+      padding: 6px 12px;
+      cursor: pointer;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: bold;
+      transition: background 0.2s ease;
+    }
+
+    .fechar-btn:hover {
+      background-color: #c0392b;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <img id="page" src="assets/page3.png" alt="Página 3 do jornal">
+
+    <button class="round-button btn-presente" title="Presentes" onclick="window.open('presentes.html', '_blank')"></button>
+    <button class="round-button btn-local" title="Localização" onclick="window.open('https://www.google.com/maps/dir//Chácara+Rainha+-+R.+Sodré,+112+-+São+João,+Betim+-+MG', '_blank')"></button>
+    <button class="round-button btn-vestimenta" title="Vestimenta" onclick="window.open('vestimenta.html', '_blank')"></button>
+
+    <button class="btn-presenca" title="Confirmar Presença" onclick="mostrarConfirmacaoPresenca()">✔️</button>
+  </div>
+
+  <div class="confirmacao-presenca" id="confirmacao-presenca">
+    <div class="formulario-presenca">
+      <button class="fechar-btn" onclick="fecharConfirmacaoPresenca()">X</button>
+      <h2>Confirme sua Presença</h2>
+      <input type="text" id="nome" placeholder="Digite seu nome" />
+      <input type="text" id="whatsapp" placeholder="Digite seu número de WhatsApp" />
+      <input type="text" id="codigo" placeholder="Digite seu código de confirmação" />
+      <button onclick="verificarCodigo()">Confirmar com Código</button>
+    </div>
+  </div>
+
+  <script>
+    let codigosValidos = ["ABC123", "XYZ789", "ESTHER001", "PARTICIPANTE99", "OI"];
+  
+  function mostrarConfirmacaoPresenca() {
+    document.getElementById('confirmacao-presenca').style.display = 'flex';
+  }
+
+  function fecharConfirmacaoPresenca() {
+    document.getElementById('confirmacao-presenca').style.display = 'none';
+  }
+
+  function verificarCodigo() {
+    const nome = document.getElementById("nome").value;
+    const whatsapp = document.getElementById("whatsapp").value;
+    const codigo = document.getElementById("codigo").value;
+
+    if (codigosValidos.includes(codigo)) {
+      alert("Código válido! Presença confirmada.");
+
+      // Envia os dados para o Google Apps Script
+      const url = 'https://script.google.com/macros/s/AKfycbzu7EiUd9OTAsmoV80W449BWJTfrNLnnpnvcGQy9W1B167J8M85QkpsJtgjIZHfrOVw/exec';
+      const dados = { nome: nome, whatsapp: whatsapp, codigo: codigo };
+
+      fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(dados)
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.result === 'success') {
+          alert('Presença confirmada e registrada!');
+          fecharConfirmacaoPresenca();
+        }
+      })
+      .catch(error => {
+        console.error('Erro ao enviar os dados:', error);
+      });
+
+    } else {
+      alert("Código inválido. Tente novamente.");
+    }
+  }
+  </script>
+</body>
+</html>

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Os Bastidores da Realeza</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      background-color: #f1ede7;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      font-family: 'Playfair Display', serif;
+      overflow: hidden;
+      perspective: 2000px;
+      position: relative;
+    }
+
+    .book {
+      position: relative;
+      width: 640px;
+      height: 900px;
+      transform-style: preserve-3d;
+    }
+
+    .page {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      background-position: center;
+      backface-visibility: hidden;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+      border-radius: 8px;
+      transform-origin: left center;
+      transition: transform 1s ease-in-out;
+    }
+
+    #page1 {
+      background-image: url('assets/page1.png');
+      z-index: 2;
+    }
+
+    .shadow {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      background: linear-gradient(to right, rgba(0,0,0,0.15), transparent);
+      pointer-events: none;
+      border-radius: 8px;
+      opacity: 0;
+      transition: opacity 0.5s;
+    }
+
+    .fade {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #f1ede7;
+      opacity: 0;
+      pointer-events: none;
+      z-index: 10;
+      transition: opacity 0.8s ease;
+    }
+
+    .fade.active {
+      opacity: 1;
+    }
+
+    /* Indicador lateral */
+    .scroll-indicator {
+      position: absolute;
+      right: 50px;
+      top: 50%;
+      transform: translateY(-50%);
+      text-align: center;
+      color: #6b5b95;
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+      font-size: 1.5rem;
+      animation: pulseText 2s infinite;
+      z-index: 5;
+      padding-right: 455px;
+    }
+
+    .scroll-indicator .arrow {
+      font-size: 4.5rem;
+      display: block;
+      animation: bounce 2s infinite;
+      margin-top: 8px;
+    }
+
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+      40% { transform: translateY(8px); }
+      60% { transform: translateY(4px); }
+    }
+
+    @keyframes pulseText {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.6; }
+    }
+  </style>
+</head>
+<body>
+  <div class="book" id="book">
+    <div class="shadow"></div>
+    <div id="page1" class="page"></div>
+  </div>
+
+  <div class="scroll-indicator">
+    Role para ver mais
+    <span class="arrow">↓</span>
+  </div>
+
+  <div class="fade" id="fade"></div>
+
+  <audio id="flipSound" src="https://www.myinstants.com/media/sounds/page-flip.mp3" preload="auto"></audio>
+
+  <script>
+    const fade = document.getElementById('fade');
+    const flipSound = document.getElementById('flipSound');
+
+    let scrollTriggered = false;
+
+    window.addEventListener('wheel', (e) => {
+      if (scrollTriggered) return;
+
+      if (e.deltaY > 50) {
+        scrollTriggered = true;
+        triggerPageTransition();
+      }
+    });
+
+    function triggerPageTransition() {
+      fade.classList.add('active');
+      flipSound.play();
+      setTimeout(() => {
+        window.location.href = 'journal2.html';
+      }, 800);
+    }
+  </script>
+</body>
+</html>
